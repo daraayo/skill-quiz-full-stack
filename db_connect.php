@@ -1,5 +1,5 @@
 <?php
-$serverName = "your_server_name"; // could be localhost or an IP address
+$serverName = "DESKTOP-03R36AQ"; // could be localhost or an IP address
 $connectionInfo = array(
     "Database" => "skills_assessment_quiz",
     "UID" => "your_username",
