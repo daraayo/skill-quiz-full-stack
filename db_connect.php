@@ -1,14 +1,15 @@
 <?php
-$serverName = "DESKTOP-03R36AQ"; // could be localhost or an IP address
+$serverName = "localhost\\SQLEXPRESS"; // or your SQL Server instance name
 $connectionInfo = array(
     "Database" => "skills_assessment_quiz",
-    "Authentication" => "Windows"
+    "UID" => "sa", // default SQL Server admin account
+    "PWD" => "your_sa_password" // the password you set for 'sa' during SQL Server installation
 );
 
 try {
     $conn = sqlsrv_connect($serverName, $connectionInfo);
-    if ($conn === false) {
-        throw new Exception("Unable to connect to database.");
+    if($conn === false) {
+        throw new Exception(print_r(sqlsrv_errors(), true));
     }
 } catch (Exception $e) {
     die("Error: " . $e->getMessage());
