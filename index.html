@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Small Business Owner Skills Assessment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <span>SkillsQuiz</span>
+            </div>
+            <div id="user-info">
+                <span id="user-name"></span>
+                <button id="login-btn" class="btn-primary"><i class="fas fa-sign-in-alt"></i> Login</button>
+                <button id="signup-btn" class="btn-secondary"><i class="fas fa-user-plus"></i> Sign Up</button>
+                <button id="logout-btn" class="btn-primary" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="landing-page">
+            <h1>Small Business Owner Skills Assessment</h1>
+            <p>Discover your strengths and areas for improvement as a potential small business owner. This comprehensive quiz will help you evaluate your readiness for entrepreneurship.</p>
+            <button id="start-quiz-btn" class="btn-primary btn-large"><i class="fas fa-play"></i> Start Quiz</button>
+        </section>
+
+        <section id="auth-container" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" id="auth-close">&times;</span>
+                <h2 id="auth-title">Login</h2>
+                <form id="auth-form">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" placeholder="Username" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Submit</button>
+                </form>
+                <p id="auth-message"></p>
+            </div>
+        </section>
+        
+        <section id="admin-login-container" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" id="admin-login-close">&times;</span>
+                <h2>Admin Login</h2>
+                <form id="admin-login-form">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="admin-username" placeholder="Admin Username" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="admin-password" placeholder="Admin Password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Login</button>
+                </form>
+                <p id="admin-login-message"></p>
+            </div>
+        </section>
+
+        <section id="quiz-container" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+            <h2 id="section-title"></h2>
+            <div id="question-container"></div>
+            <div id="navigation">
+                <button id="prev-btn" class="btn-secondary"><i class="fas fa-arrow-left"></i> Previous</button>
+                <button id="next-btn" class="btn-primary">Next <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </section>
+
+        <section id="admin-dashboard" style="display: none;">
+            <h2>Admin Dashboard</h2>
+            <button id="admin-logout-btn" class="btn-secondary">Logout</button>
+            <div id="user-stats">
+                <div class="stat-card">
+                    <h3>Total Registered Users</h3>
+                    <p id="total-users"></p>
+                </div>
+                <div class="stat-card">
+                    <h3>Users Completed Quiz</h3>
+                    <p id="completed-users"></p>
+                </div>
+                <div class="stat-card">
+                    <h3>Users Not Completed Quiz</h3>
+                    <p id="incomplete-users"></p>
+                </div>
+            </div>
+            <div id="user-list">
+                <h3>User List</h3>
+                <table id="user-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Quiz Status</th>
+                            <th>Quiz Score</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 SkillsQuiz. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
