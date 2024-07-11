@@ -1,9 +1,8 @@
 <?php
-$serverName = "localhost\\SQLEXPRESS"; // or your SQL Server instance name
+$serverName = "DESKTOP-O3R36AQ"; // or your SQL Server instance name
 $connectionInfo = array(
-    "Database" => "skills_assessment_quiz",
-    "UID" => "sa", // default SQL Server admin account
-    "PWD" => "your_sa_password" // the password you set for 'sa' during SQL Server installation
+    "Database" => "AYO",
+    "Authentication" => "Windows",
 );
 
 try {
