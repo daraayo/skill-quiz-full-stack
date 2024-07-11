@@ -3,22 +3,31 @@ session_start();
 require_once 'db_connect.php';
 
 function register($username, $password) {
-    global $pdo;
+    global $conn;
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $stmt = $pdo->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
-    if ($stmt->execute([$username, $hashed_password])) {
-        $user_id = $pdo->lastInsertId();
-        $stmt = $pdo->prepare("INSERT INTO quiz_progress (user_id) VALUES (?)");
-        return $stmt->execute([$user_id]);
+    $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+    $params = array($username, $hashed_password);
+    $stmt = sqlsrv_query($conn, $sql, $params);
+    if ($stmt === false) {
+        return false;
     }
-    return false;
+    sqlsrv_free_stmt($stmt);
+
+    $user_id = sqlsrv_query($conn, "SELECT @@IDENTITY AS id");
+    $user_id = sqlsrv_fetch_array($user_id)['id'];
+
+    $sql = "INSERT INTO quiz_progress (user_id) VALUES (?)";
+    $params = array($user_id);
+    $stmt = sqlsrv_query($conn, $sql, $params);
+    return $stmt !== false;
 }
 
 function login($username, $password) {
-    global $pdo;
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
-    $stmt->execute([$username]);
-    $user = $stmt->fetch();
+    global $conn;
+    $sql = "SELECT * FROM users WHERE username = ?";
+    $params = array($username);
+    $stmt = sqlsrv_query($conn, $sql, $params);
+    $user = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
     if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
