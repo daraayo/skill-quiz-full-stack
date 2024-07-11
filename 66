@@ -1,0 +1,10 @@
+USE [master]
+GO
+CREATE LOGIN [quizapp] WITH PASSWORD=N'YourStrongPassword123!', DEFAULT_DATABASE=[skills_assessment_quiz]
+GO
+USE [skills_assessment_quiz]
+GO
+CREATE USER [quizapp] FOR LOGIN [quizapp]
+GO
+EXEC sp_addrolemember 'db_owner', 'quizapp'
+GO
