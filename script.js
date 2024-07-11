@@ -4,7 +4,7 @@ const users = JSON.parse(localStorage.getItem('users')) || {};
 
 // Admin credentials (in a real application, this should be handled securely on the server)
 const ADMIN_PASSWORD = 'admin1234'; // Replace with a secure password
-
+ 
 // DOM Elements
 const userInfo = document.getElementById('user-info');
 const userName = document.getElementById('user-name');
