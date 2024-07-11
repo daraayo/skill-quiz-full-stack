@@ -1,16 +1,19 @@
 <?php
-$serverName = "DESKTOP-O3R36AQ"; // or your SQL Server instance name
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+$serverName = "localhost\\SQLEXPRESS"; // adjust if your instance name is different
 $connectionInfo = array(
-    "Database" => "AYO",
-    "Authentication" => "Windows",
+    "Database" => "skills_assessment_quiz",
+    "UID" => "quizapp",
+    "PWD" => "YourStrongPassword123!" // use the password you set in step 5
 );
 
-try {
-    $conn = sqlsrv_connect($serverName, $connectionInfo);
-    if($conn === false) {
-        throw new Exception(print_r(sqlsrv_errors(), true));
-    }
-} catch (Exception $e) {
-    die("Error: " . $e->getMessage());
+$conn = sqlsrv_connect($serverName, $connectionInfo);
+
+if ($conn === false) {
+    die(print_r(sqlsrv_errors(), true));
 }
+
+echo "Connected successfully";
 ?>
