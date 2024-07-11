@@ -1,20 +1,17 @@
 <?php
-$host = 'localhost';
-$db   = 'skills_assessment_quiz';
-$user = 'your_username';
-$pass = 'your_password';
-$charset = 'utf8mb4';
-
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-];
+$serverName = "your_server_name"; // could be localhost or an IP address
+$connectionInfo = array(
+    "Database" => "skills_assessment_quiz",
+    "UID" => "your_username",
+    "PWD" => "your_password"
+);
 
 try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (\PDOException $e) {
-    throw new \PDOException($e->getMessage(), (int)$e->getCode());
+    $conn = sqlsrv_connect($serverName, $connectionInfo);
+    if ($conn === false) {
+        throw new Exception("Unable to connect to database.");
+    }
+} catch (Exception $e) {
+    die("Error: " . $e->getMessage());
 }
 ?>
