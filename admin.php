@@ -3,8 +3,8 @@ session_start();
 require_once 'db_connect.php';
 
 function getUserStats() {
-    global $pdo;
-    $stmt = $pdo->query("
+    global $conn;
+    $sql = "
         SELECT 
             COUNT(DISTINCT u.id) as total_users,
             SUM(CASE WHEN qp.completed = 1 THEN 1 ELSE 0 END) as completed_users,
@@ -12,13 +12,14 @@ function getUserStats() {
         FROM users u
         LEFT JOIN quiz_progress qp ON u.id = qp.user_id
         WHERE u.is_admin = 0
-    ");
-    return $stmt->fetch();
+    ";
+    $stmt = sqlsrv_query($conn, $sql);
+    return sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 }
 
 function getUserList() {
-    global $pdo;
-    $stmt = $pdo->query("
+    global $conn;
+    $sql = "
         SELECT 
             u.username,
             CASE WHEN qp.completed = 1 THEN 'Completed' ELSE 'Incomplete' END as status,
@@ -27,8 +28,13 @@ function getUserList() {
         LEFT JOIN quiz_progress qp ON u.id = qp.user_id
         WHERE u.is_admin = 0
         ORDER BY u.username
-    ");
-    return $stmt->fetchAll();
+    ";
+    $stmt = sqlsrv_query($conn, $sql);
+    $users = [];
+    while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+        $users[] = $row;
+    }
+    return $users;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_SESSION['is_admin']) && $_SESSION['is_admin']) {
