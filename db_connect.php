@@ -2,8 +2,7 @@
 $serverName = "DESKTOP-03R36AQ"; // could be localhost or an IP address
 $connectionInfo = array(
     "Database" => "skills_assessment_quiz",
-    "UID" => "your_username",
-    "PWD" => "your_password"
+    "Authentication" => "Windows"
 );
 
 try {
