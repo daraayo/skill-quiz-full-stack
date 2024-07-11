@@ -3,22 +3,32 @@ session_start();
 require_once 'db_connect.php';
 
 function saveAnswer($userId, $section, $question, $answer) {
-    global $pdo;
-    $stmt = $pdo->prepare("INSERT INTO quiz_answers (user_id, section, question, answer) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE answer = ?");
-    return $stmt->execute([$userId, $section, $question, $answer, $answer]);
+    global $conn;
+    $sql = "INSERT INTO quiz_answers (user_id, section, question, answer) VALUES (?, ?, ?, ?) 
+            ON DUPLICATE KEY UPDATE answer = ?";
+    $params = array($userId, $section, $question, $answer, $answer);
+    $stmt = sqlsrv_query($conn, $sql, $params);
+    return $stmt !== false;
 }
 
 function getQuizProgress($userId) {
-    global $pdo;
-    $stmt = $pdo->prepare("SELECT * FROM quiz_answers WHERE user_id = ?");
-    $stmt->execute([$userId]);
-    return $stmt->fetchAll();
+    global $conn;
+    $sql = "SELECT * FROM quiz_answers WHERE user_id = ?";
+    $params = array($userId);
+    $stmt = sqlsrv_query($conn, $sql, $params);
+    $progress = [];
+    while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+        $progress[] = $row;
+    }
+    return $progress;
 }
 
 function updateQuizStatus($userId, $completed, $score) {
-    global $pdo;
-    $stmt = $pdo->prepare("UPDATE quiz_progress SET completed = ?, score = ? WHERE user_id = ?");
-    return $stmt->execute([$completed, $score, $userId]);
+    global $conn;
+    $sql = "UPDATE quiz_progress SET completed = ?, score = ? WHERE user_id = ?";
+    $params = array($completed, $score, $userId);
+    $stmt = sqlsrv_query($conn, $sql, $params);
+    return $stmt !== false;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id'])) {
